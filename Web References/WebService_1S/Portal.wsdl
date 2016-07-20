@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<definitions xmlns:xsd1="www.URII.com" xmlns:xsd2="http://10.5.28.128/request" xmlns:soapbind="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12bind="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="www.URII.com" name="Portal" targetNamespace="www.URII.com" xmlns="http://schemas.xmlsoap.org/wsdl/">
+  <types>
+    <xs:schema xmlns:tns="http://10.5.28.128/request" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://10.5.28.128/request" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:complexType name="ArrayData">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="Data" nillable="true" type="tns:Data" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="Data">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="Properties" nillable="true" type="tns:Property" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="DayTypeArray">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="Data" type="tns:DayTypeData" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="DayTypeData">
+        <xs:sequence>
+          <xs:element name="PersonTabNom" type="xs:string" />
+          <xs:element name="Day" type="xs:string" />
+          <xs:element name="Type" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="Property">
+        <xs:sequence>
+          <xs:element name="Name" type="xs:string" />
+          <xs:element name="Type" nillable="true" type="xs:string" />
+          <xs:element name="Value" />
+        </xs:sequence>
+      </xs:complexType>
+    </xs:schema>
+    <xs:schema xmlns:xs2="www.URII.com" xmlns:xs1="http://10.5.28.128/request" elementFormDefault="qualified" targetNamespace="www.URII.com" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:import namespace="http://10.5.28.128/request" />
+      <xs:element name="QueryToDatabase">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="Login" type="xs:string" />
+            <xs:element name="BeginDate" type="xs:date" />
+            <xs:element name="EndDate" type="xs:date" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="QueryToDatabaseResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="return" nillable="true" type="xs1:ArrayData" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="TableChanging">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="Login" type="xs:string" />
+            <xs:element name="DayTypeData" type="xs1:DayTypeData" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="TableChangingResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="return" type="xs:boolean" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:schema>
+  </types>
+  <message name="QueryToDatabaseRequestMessage">
+    <part name="parameters" element="tns:QueryToDatabase" />
+  </message>
+  <message name="QueryToDatabaseResponseMessage">
+    <part name="parameters" element="tns:QueryToDatabaseResponse" />
+  </message>
+  <message name="TableChangingRequestMessage">
+    <part name="parameters" element="tns:TableChanging" />
+  </message>
+  <message name="TableChangingResponseMessage">
+    <part name="parameters" element="tns:TableChangingResponse" />
+  </message>
+  <portType name="PortalPortType">
+    <operation name="QueryToDatabase">
+      <input message="tns:QueryToDatabaseRequestMessage" />
+      <output message="tns:QueryToDatabaseResponseMessage" />
+    </operation>
+    <operation name="TableChanging">
+      <input message="tns:TableChangingRequestMessage" />
+      <output message="tns:TableChangingResponseMessage" />
+    </operation>
+  </portType>
+  <binding name="PortalSoapBinding" type="tns:PortalPortType">
+    <soapbind:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <operation name="QueryToDatabase">
+      <soapbind:operation soapAction="www.URII.com#Portal:QueryToDatabase" style="document" />
+      <input>
+        <soapbind:body use="literal" />
+      </input>
+      <output>
+        <soapbind:body use="literal" />
+      </output>
+    </operation>
+    <operation name="TableChanging">
+      <soapbind:operation soapAction="www.URII.com#Portal:TableChanging" style="document" />
+      <input>
+        <soapbind:body use="literal" />
+      </input>
+      <output>
+        <soapbind:body use="literal" />
+      </output>
+    </operation>
+  </binding>
+  <binding name="PortalSoap12Binding" type="tns:PortalPortType">
+    <soap12bind:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <operation name="QueryToDatabase">
+      <soap12bind:operation soapAction="www.URII.com#Portal:QueryToDatabase" style="document" />
+      <input>
+        <soap12bind:body use="literal" />
+      </input>
+      <output>
+        <soap12bind:body use="literal" />
+      </output>
+    </operation>
+    <operation name="TableChanging">
+      <soap12bind:operation soapAction="www.URII.com#Portal:TableChanging" style="document" />
+      <input>
+        <soap12bind:body use="literal" />
+      </input>
+      <output>
+        <soap12bind:body use="literal" />
+      </output>
+    </operation>
+  </binding>
+  <service name="Portal">
+    <port name="PortalSoap" binding="tns:PortalSoapBinding">
+      <documentation>
+        <wsi:Claim xmlns:wsi="http://ws-i.org/schemas/conformanceClaim/" conformsTo="http://ws-i.org/profiles/basic/1.1" />
+      </documentation>
+      <soapbind:address location="http://srv-svn-01/myWebService/ws/ws3.1cws" />
+    </port>
+    <port name="PortalSoap12" binding="tns:PortalSoap12Binding">
+      <soap12bind:address location="http://srv-svn-01/myWebService/ws/ws3.1cws" />
+    </port>
+  </service>
+</definitions>
