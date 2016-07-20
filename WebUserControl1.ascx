@@ -9,4 +9,5 @@ $(document).ready(function() {
 <select runat="server" id="SSSS" class="js-example-basic-single" title="ff">
   <option value="AL">Alabama</option>
   <option value="WY">Wyoming</option>
+  <option value="WY1">Wyoming</option>
 </select>
